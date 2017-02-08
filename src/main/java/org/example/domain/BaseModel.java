@@ -1,21 +1,21 @@
 package org.example.domain;
 
-import java.sql.Timestamp;
+import io.ebean.Model;
+import io.ebean.annotation.CreatedTimestamp;
+import io.ebean.annotation.SoftDelete;
+import io.ebean.annotation.UpdatedTimestamp;
 
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
-
-import io.ebean.Model;
-import io.ebean.annotation.CreatedTimestamp;
-import io.ebean.annotation.UpdatedTimestamp;
+import java.sql.Timestamp;
 
 /**
  * Base domain object with Id, version, whenCreated and whenUpdated.
- * 
+ *
  * <p>
  * Extending Model to enable the 'active record' style.
- * 
+ *
  * <p>
  * whenCreated and whenUpdated are generally useful for maintaining external search services (like
  * elasticsearch) and audit.
@@ -34,6 +34,9 @@ public abstract class BaseModel extends Model {
 
   @UpdatedTimestamp
   Timestamp whenUpdated;
+
+  @SoftDelete
+  Boolean deleted;
 
   public Long getId() {
     return id;
@@ -67,4 +70,11 @@ public abstract class BaseModel extends Model {
     this.whenUpdated = whenUpdated;
   }
 
+  public Boolean getDeleted() {
+    return deleted;
+  }
+
+  public void setDeleted(Boolean deleted) {
+    this.deleted = deleted;
+  }
 }
