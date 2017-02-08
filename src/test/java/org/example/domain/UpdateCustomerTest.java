@@ -17,7 +17,7 @@ public class UpdateCustomerTest extends ExampleBaseTestCase {
         Ebean.insert(customer);
 
         customer.setComments("Any comments");
-        // Version is not set to NULL
+        // Version is now set to NULL
         customer.setVersion(null);
 
         Ebean.update(customer);
