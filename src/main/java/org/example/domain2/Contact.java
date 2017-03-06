@@ -1,4 +1,4 @@
-package org.example.domain;
+package org.example.domain2;
 
 import org.example.domain.finder.ContactFinder;
 

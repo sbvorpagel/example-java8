@@ -6,10 +6,6 @@ import org.example.domain.Address;
 import org.example.domain.Contact;
 import org.example.domain.Country;
 import org.example.domain.Customer;
-import org.example.domain.Order;
-import org.example.domain.Order.Status;
-import org.example.domain.OrderDetail;
-import org.example.domain.Product;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,8 +31,6 @@ public class LoadExampleData {
       }
       me.deleteAll();
       me.insertCountries();
-      me.insertProducts();
-      me.insertTestCustAndOrders();
     });
     runOnce = true;
   }
@@ -49,8 +43,6 @@ public class LoadExampleData {
       // orm update use bean name and bean properties
       // server.createUpdate(OrderShipment.class, "delete from orderShipment").execute();
 
-      server.createUpdate(OrderDetail.class, "delete from orderDetail").execute();
-      server.createUpdate(Order.class, "delete from order").execute();
       server.createUpdate(Contact.class, "delete from contact").execute();
       server.createUpdate(Customer.class, "delete from Customer").execute();
       server.createUpdate(Address.class, "delete from address").execute();
@@ -69,55 +61,11 @@ public class LoadExampleData {
     });
   }
 
-  public void insertProducts() {
-
-    server.execute(() -> {
-      Product p = new Product("C001", "Chair");
-      server.save(p);
-
-      p = new Product("DSK1","Desk");
-      server.save(p);
-
-      p = new Product("C002", "Computer");
-
-      server.save(p);
-
-      p = new Product("C003", "Printer");
-      server.save(p);
-    });
-  }
-
-  public void insertTestCustAndOrders() {
-
-
-    Ebean.execute( () -> {
-        Customer cust1 = insertCustomer("Rob");
-        Customer cust2 = insertCustomerNoAddress();
-        insertCustomerFiona();
-        insertCustomerNoContacts("NocCust");
-
-        createOrder1(cust1);
-        createOrder2(cust2);
-        createOrder3(cust1);
-        createOrder4(cust1);
-      }
-    );
-  }
-
   public static Customer createCustAndOrder(String custName) {
 
     LoadExampleData me = new LoadExampleData();
     Customer cust1 = insertCustomer(custName);
-    me.createOrder1(cust1);
     return cust1;
-  }
-
-  public static Order createOrderCustAndOrder(String custName) {
-
-    LoadExampleData me = new LoadExampleData();
-    Customer cust1 = insertCustomer(custName);
-    Order o = me.createOrder1(cust1);
-    return o;
   }
 
   private static int contactEmailNum = 1;
@@ -199,65 +147,4 @@ public class LoadExampleData {
     return c;
   }
 
-  private Order createOrder1(Customer customer) {
-
-    Product product1 = Product.find.ref(1L);
-    Product product2 = Product.find.ref(2L);
-    Product product3 = Product.find.ref(3L);
-
-    Order order = new Order(customer);
-
-    List<OrderDetail> details = new ArrayList<>();
-    details.add(new OrderDetail(product1, 5, 10.50));
-    details.add(new OrderDetail(product2, 3, 1.10));
-    details.add(new OrderDetail(product3, 1, 2.00));
-    order.setDetails(details);
-
-    //order.addShipment(new OrderShipment());
-
-    Ebean.save(order);
-    return order;
-  }
-
-  private void createOrder2(Customer customer) {
-
-    Product product1 = Ebean.getReference(Product.class, 1);
-
-    Order order = new Order(customer);
-    order.setStatus(Status.SHIPPED);
-    order.setShipDate(LocalDate.now().plusDays(1));
-
-    List<OrderDetail> details = new ArrayList<>();
-    details.add(new OrderDetail(product1, 4, 10.50));
-    order.setDetails(details);
-
-    //order.addShipment(new OrderShipment());
-
-    Ebean.save(order);
-  }
-
-  private void createOrder3(Customer customer) {
-
-    Product product1 = Product.find.ref(1L);
-    Product product3 = Product.find.ref(3L);
-
-    Order order = new Order(customer);
-    order.setStatus(Status.COMPLETE);
-    order.setShipDate(LocalDate.now().plusDays(2));
-
-    List<OrderDetail> details = new ArrayList<>();
-    details.add(new OrderDetail(product1, 3, 10.50));
-    details.add(new OrderDetail(product3, 40, 2.10));
-    order.setDetails(details);
-
-    //order.addShipment(new OrderShipment());
-
-    Ebean.save(order);
-  }
-
-  private void createOrder4(Customer customer) {
-
-    Order order = new Order(customer);
-    Ebean.save(order);
-  }
 }

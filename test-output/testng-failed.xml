@@ -3,19 +3,17 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test verbose="2" name="Default test">
     <classes>
-      <class name="wssim.CustomerUnitTest"/>
+      <class name="wssim.CustomerUnitTestDomain2"/>
     </classes>
   </test> <!-- Default test -->
   <test name="Default test(failed)">
     <classes>
-      <class name="wssim.CustomerUnitTest">
+      <class name="wssim.CustomerUnitTestDomain2">
         <methods>
-          <include name="updateNonexistentRegister"/>
-          <include name="oneTonOneSetNull"/>
           <include name="deleteOneToManySetNull"/>
-          <include name="oneTonOneUpdate"/>
+          <include name="updateOnDeletedEntity"/>
         </methods>
-      </class> <!-- wssim.CustomerUnitTest -->
+      </class> <!-- wssim.CustomerUnitTestDomain2 -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

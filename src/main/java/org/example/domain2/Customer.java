@@ -1,4 +1,4 @@
-package org.example.domain;
+package org.example.domain2;
 
 import io.ebean.annotation.DbArray;
 import io.ebean.annotation.DbComment;

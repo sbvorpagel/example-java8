@@ -1,4 +1,4 @@
-package org.example.domain;
+package org.example.domain2;
 
 import io.ebean.Model;
 import io.ebean.annotation.Cache;
