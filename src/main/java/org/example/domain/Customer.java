@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -54,12 +55,28 @@ public class Customer extends BaseModel {
 
   @OneToMany(mappedBy="customer", cascade=CascadeType.PERSIST)
   List<Contact> contacts;
+  
+  @OneToOne(mappedBy = "customerHome", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Address homeAddress;
+  
+  public Address getHomeAddress() {
+	  return homeAddress;
+  }
+  
+  public void setHomeAddress(Address homeAddress) {
+	  this.homeAddress = homeAddress;
+  }
 
   public Customer(String name) {
     this.name = name;
   }
 
-  public String toString() {
+  public Customer(String name, Long id) {
+	this.name = name;
+	this.id = id;
+}
+
+public String toString() {
     return "id:" + id + " name:" + name;
   }
 
@@ -131,5 +148,7 @@ public class Customer extends BaseModel {
     contact.setCustomer(this);
     contacts.add(contact);
   }
+  
+  
   
 }

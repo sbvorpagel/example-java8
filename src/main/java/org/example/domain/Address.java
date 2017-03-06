@@ -2,7 +2,9 @@ package org.example.domain;
 
 import org.example.domain.finder.AddressFinder;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -14,6 +16,10 @@ import javax.validation.constraints.Size;
 public class Address extends BaseModel {
 
   public static final AddressFinder find = new AddressFinder();
+  
+  @OneToOne(optional = false)
+  @JoinColumn(name = "customer_id", referencedColumnName = "id")
+  private Customer customerHome;
 
   @Size(max = 100)
   String line1;
@@ -100,4 +106,12 @@ public class Address extends BaseModel {
     this.country = country;
   }
 
+public Customer getCustomerHome() {
+	return customerHome;
+}
+
+public void setCustomerHome(Customer customerHome) {
+	this.customerHome = customerHome;
+}
+  
 }

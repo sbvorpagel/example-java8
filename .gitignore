@@ -15,3 +15,4 @@ log/
 *.ipr
 *.iws
 .idea/
+/.apt_generated/

@@ -1,14 +1,16 @@
 package org.example.domain;
 
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
+
 import io.ebean.Model;
 import io.ebean.annotation.CreatedTimestamp;
 import io.ebean.annotation.SoftDelete;
 import io.ebean.annotation.UpdatedTimestamp;
-
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Version;
-import java.sql.Timestamp;
 
 /**
  * Base domain object with Id, version, whenCreated and whenUpdated.
@@ -36,7 +38,7 @@ public abstract class BaseModel extends Model {
   Timestamp whenUpdated;
 
   @SoftDelete
-  Boolean deleted;
+  Boolean deleted = false;
 
   public Long getId() {
     return id;
